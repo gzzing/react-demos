@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>iMooc React</title>
+    <script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+    <script src="../build/browser.min.js"></script>
+</head>
+<body>
+
+<div id="root"></div>
+<script type="text/babel">
+    class TestClickComponent extends React.Component {
+        render() {
+            return (
+                <div>
+                    <button onClick={this.handleClick.bind(this)}>show/hide</button>
+                    <span ref="tip"> 测试点击</span>
+                </div>
+            );
+        }
+
+        handleClick(event) {
+            let tipE = this.refs.tip;
+            if(tipE.style.display === 'none') {
+                tipE.style.display = 'inline';
+            } else {
+                tipE.style.display = 'none';
+            }
+            event.stopPropagation();
+            event.preventDefault();
+        }
+    }
+
+    class TestInputComponent extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {inputContent: ''};
+        }
+
+        changeHandler(event) {
+            this.setState({inputContent: event.target.value});
+            event.stopPropagation();
+            event.preventDefault();
+        }
+
+        render() {
+            return (
+                <div>
+                    <input type="text" onChange={this.changeHandler.bind(this)}/><span>{this.state.inputContent}</span>
+                </div>
+            );
+        }
+    }
+
+    ReactDOM.render(
+        <div>
+            <TestClickComponent/>
+            <br/><br/><br/>
+            <TestInputComponent/>
+        </div>,
+        document.getElementById('root')
+    );
+</script>
+</body>
+</html>
